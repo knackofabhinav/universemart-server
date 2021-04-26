@@ -1,10 +1,10 @@
-const {Schema, Model} = require('mongoose')
+const {Schema, model} = require('mongoose')
 
 const ProductSchema = new Schema({
     name: String,
     price: Number
 })
 
-const Product = Model("Product", ProductSchema)
+const Product = model("Product", ProductSchema)
 
 module.exports = { Product }
