@@ -7,10 +7,10 @@ async function initializeDBConnection(){
         await mongoose.connect(uri, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
-        })
-        console.log("successfully connected")
+            useCreateIndex: true
+        }).then(() => console.log("successfully connected"))
     } catch (err){
-        console.log("error connecting to db")
+        console.log("error connecting to db", err)
     }
 }
 

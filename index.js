@@ -4,7 +4,6 @@ const cors = require("cors");
 const port = 3000;
 const { initializeDBConnection } = require("./db/db.connect");
 const productlisting = require("./routers/productlisting.router");
-
 app.use(express.json());
 app.use(cors());
 
@@ -21,10 +20,17 @@ app.use((req, res) => {
   res.status(404).json({ success: false });
 });
 
-// Error Handler
-app.use((err, req, res, next) => {
-  console.log(err.stack);
-  res.status(500).json({ success: false });
+/**
+ * Error Handler
+ * Don't move
+ */
+ app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    success: false,
+    message: "error occured, see the errMessage key for more details",
+    errorMessage: err.message,
+  });
 });
 
 app.listen(port, () => {
