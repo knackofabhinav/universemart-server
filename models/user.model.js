@@ -8,8 +8,8 @@ const userSchema = new mongoose.Schema(
       unique: "User Already Exists. Please Login",
     },
     password: { type: String, required: true },
-    wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
-    cart: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product", quantity: {type: Number, required} }],
+    wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product", unique: "Product already exists"}],
+    cart: [{type: mongoose.Schema.Types.ObjectId, ref: "CartItem"}]
   },
   { timestamps: true }
 );

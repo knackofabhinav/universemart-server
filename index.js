@@ -4,6 +4,7 @@ const cors = require("cors");
 const port = 3000;
 const { initializeDBConnection } = require("./db/db.connect");
 const productlisting = require("./routers/productlisting.router");
+const user = require("./routers/user.router");
 app.use(express.json());
 app.use(cors());
 
@@ -14,6 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/productlisting", productlisting);
+app.use("/user", user);
 
 //  404 Route Handler
 app.use((req, res) => {
