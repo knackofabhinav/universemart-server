@@ -1,13 +1,12 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const port = 3000;
+const port = process.env.PORT || 3000;
 const { initializeDBConnection } = require("./db/db.connect");
 const productlisting = require("./routers/productlisting.router");
 const user = require("./routers/user.router");
 app.use(express.json());
 app.use(cors());
-
 
 initializeDBConnection();
 
@@ -27,7 +26,7 @@ app.use((req, res) => {
  * Error Handler
  * Don't move
  */
- app.use((err, req, res, next) => {
+app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
     success: false,
