@@ -8,6 +8,7 @@ const user = require("./routers/user.router");
 app.use(express.json());
 app.use(cors());
 
+
 initializeDBConnection();
 
 app.get("/", (req, res) => {
