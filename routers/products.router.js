@@ -1,5 +1,5 @@
 const express = require("express");
-const { Product } = require("../models/products.model");
+const { Product } = require("../models/product.model");
 const { extend } = require("lodash");
 const router = express.Router();
 
@@ -8,9 +8,10 @@ router
   .get(async (req, res) => {
     try {
       const products = await Product.find({});
+      products.map((product) => (product.__v = undefined));
       res.json({ success: true, products });
     } catch (err) {
-        console.log(err)
+      console.log(err);
       res.status(404).json({ success: false, message: "Products Not Found" });
     }
   })
@@ -54,6 +55,7 @@ router
     let { product } = req;
     product = extend(product, updateProduct);
     product.save();
+    product.__v = undefined;
     res.json({ success: true, product });
   });
 
