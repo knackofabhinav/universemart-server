@@ -4,37 +4,22 @@ const router = Router();
 
 router.route("/signup").post(async (req, res) => {
   try {
-    const user = req.body;
-    const NewUser = new User(user);
+    const { username, password } = req.body;
+    const NewUser = new User({ username, password });
     const savedUser = await NewUser.save();
-
-    const userResponse = {
-      username: savedUser.username,
-      cart: savedUser.cart,
-      wishlist: savedUser.wishlist,
-    };
-    res.json({ success: true, user: userResponse });
+    res.json({ success: true, savedUser });
   } catch (err) {
-    res.status(500).json({ success: false, errMessage: err });
+    console.log(err);
+    res.status(409).json({ success: false, errMessage: err });
   }
 });
 
 router.route("/login").post(async (req, res) => {
   try {
     const { username, password } = req.body;
-    const user = await User.findOne({ username })
-      .populate({
-        path: "cart",
-        populate: {
-          path: "product",
-        },
-      })
-      .populate({
-        path: "wishlist",
-        populate: {
-          path: "product",
-        },
-      });
+    const user = await User.findOne({ username }).populate({
+      path: "cart",
+    });
     const userResponse = {
       userId: user._id,
       username: user.username,
