@@ -18,10 +18,14 @@ router
   .post(async (req, res) => {
     try {
       const product = req.body;
+      const { url } = req.body;
+      const dataInDb = await Product.findOne({ url });
+      console.log(dataInDb);
       const NewProduct = new Product(product);
       const savedProduct = await NewProduct.save();
       res.json({ success: true, savedProduct });
     } catch (err) {
+      console.log(err);
       res
         .status(500)
         .json({ success: false, message: "Unable to add product" });
