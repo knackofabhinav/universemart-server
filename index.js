@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -7,12 +8,14 @@ const products = require("./routers/products.router");
 const user = require("./routers/user.router");
 const cart = require("./routers/cart.router");
 const wishlist = require("./routers/wishlist.router");
+const payment = require("./routers/payment.router");
 app.use(express.json());
 app.use(cors());
 
 initializeDBConnection();
 
 app.use("/", user);
+app.use("/payment", payment);
 app.use("/products", products);
 app.use("/cart", cart);
 app.use("/wishlist", wishlist);

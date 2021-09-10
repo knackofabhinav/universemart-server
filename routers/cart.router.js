@@ -58,6 +58,7 @@ router
       res.status(500).json({ success: false, errMessage: err });
     }
   });
+
 router.route("/:userId/:cartId").delete(async (req, res) => {
   try {
     const { userId, cartId } = req.params;
@@ -66,6 +67,19 @@ router.route("/:userId/:cartId").delete(async (req, res) => {
     await user.cart.remove({ _id: cartFound });
     user.save();
     console.log(user.cart);
+    res.json({ success: true, cart: user.cart });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, errMessage: err });
+  }
+});
+
+router.route("/clear").post(async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const user = await User.findById(userId);
+    user.cart = [];
+    await user.save();
     res.json({ success: true, cart: user.cart });
   } catch (err) {
     console.error(err);
